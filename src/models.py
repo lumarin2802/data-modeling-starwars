@@ -8,24 +8,53 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
-class Person(Base):
-    __tablename__ = 'person'
+class User(Base):
+    __tablename__ = 'user'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+    surnname = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
 
-class Address(Base):
-    __tablename__ = 'address'
+
+class Favorites(Base):
+    __tablename__ = 'favorites'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
+    character_id = (Integer, ForeignKey('character.id'))
+    planet_id =(Integer, ForeignKey('planet.id'))
+    vehicle_id=(Integer, ForeignKey('vehicle.id'))
+    user_id = (Integer, ForeignKey('user.id'))
 
+    class Character(Base):
+     __tablename__ = 'character'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = Column(Integer, primary_key=True)
+    name = Column(String (250))
+    birth_year = Column(String (250))
+    gender = Column(String (250))
+
+    class Planet(Base):
+     __tablename__ = 'planet'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = Column(Integer, primary_key=True)
+    name = Column(String (250))
+    diameter = Column(String (250))
+    rotation_period = Column(String (250))
+    
+    class Vehicle(Base):
+     __tablename__ = 'vehicle'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = Column(Integer, primary_key=True)
+    name = Column(String (250))
+    model = Column(String (250))
+    vehicle_class = Column(String (250))
+     
     def to_dict(self):
         return {}
 
